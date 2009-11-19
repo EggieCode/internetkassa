@@ -1,5 +1,8 @@
 <?php
 
+require_once('config.php');
+require_once('object.php');
+
 class IK_feedback extends IK_object {
 	
 	protected $_order_id;
@@ -16,19 +19,34 @@ class IK_feedback extends IK_object {
 	protected $_transaction_date;
 	protected $_customer_name;
 	protected $_signature;
+	protected $_customer_country;
+	protected $_ip_address;
+	
+	protected $_secret = InternetkassaConfig::secret_out;
 	
 	public function bind($array) {
-		var_dump($array);
-		exit;
+		$vars = $this->vars();
+		
+		foreach ($array as $key => $value) {
+			try {
+				$this->$key = $value;
+			} catch (Exception $e) {
+				continue;
+			}
+		}
+		
+		if ($this->wanted_signature() != $this->signature) {
+			throw new Exception('De signatures kloppen niet!', 2);
+		}
 	}
 	
 	public function wanted_signature() {
-		return sha1($this->order_id() . $this->currency() . $this->amount() . $this->payment_method() \
-		. $this->acceptance_code() . $this->status() . $this->card_number() . $this->payment_id() \
-		. $this->error_code());
+		return strtoupper(sha1($this->order_id . $this->currency . $this->amount . $this->payment_method
+		. $this->acceptance_code . $this->status . $this->card_number . $this->payment_id
+		. $this->error_code . $this->card_brand . $this->secret));
 	}
 	
-	public function set_order_ID($orderID) {
+	public function set_orderID($orderID) {
 		$this->order_id = $orderID;
 	}
 	
@@ -36,7 +54,7 @@ class IK_feedback extends IK_object {
 		$this->payment_method = $PM;
 	}
 
-	public function set_ACCEPTANTE($ACCEPTANCE) {
+	public function set_ACCEPTANCE($ACCEPTANCE) {
 		$this->acceptance_code = $ACCEPTANCE;
 	}
 	
@@ -52,8 +70,8 @@ class IK_feedback extends IK_object {
 		$this->payment_id = $PAYID;
 	}
 	
-	public function set_NC_ERROR($NC_ERROR) {
-		$this->error_code = $NC_ERROR;
+	public function set_NCERROR($NCERROR) {
+		$this->error_code = $NCERROR;
 	}
 	
 	public function set_BRAND($BRAND) {
@@ -69,13 +87,19 @@ class IK_feedback extends IK_object {
 	}
 	
 	public function set_CN($CN) {
-		$this->card_number = $CN;
+		$this->customer_name = $CN;
 	}
-	
-	protected $_SHASIGN;
 	
 	public function set_SHASIGN($SHASIGN) {
 		$this->signature = $SHASIGN;
+	}
+	
+	public function set_CCCTY($CCCTY) {
+		$this->customer_country = $CCCTY;
+	}
+	
+	public function set_IP($IP) {
+		$this->ip_address = $IP;
 	}
 }
 

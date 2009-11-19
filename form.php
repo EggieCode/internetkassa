@@ -82,6 +82,10 @@ class IK_form extends IK_object {
 		<form method="POST" action="<?= $this->_internetkassa->internetkassa_url; ?>" id="idealForm" name="idealForm">
 			
 			<?php foreach ($this->public_vars() as $name => $value) { ?>
+				<?php if ($name == 'strict') { ?>
+					<?php continue; ?>
+				<?php } ?>
+				
 				<input type="hidden" name="<?= $name; ?>" value="<?= $value; ?>" />
 			<?php } ?>
 			
