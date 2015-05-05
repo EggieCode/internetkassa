@@ -1,6 +1,7 @@
 <?php
 
-class IK_form extends IK_object {
+require_once('IK_Object.class.php');
+class IK_Form extends IK_Object {
 	
 	protected $_internetkassa;
 	
@@ -77,7 +78,9 @@ class IK_form extends IK_object {
 		return implode('&', $params);
 	}
 	
-    public function show() { ?>
+	public function show($echo = true) {
+		ob_start();
+	?>
     
 		<form method="POST" action="<?= $this->_internetkassa->internetkassa_url; ?>" id="idealForm" name="idealForm">
 			
@@ -99,9 +102,13 @@ class IK_form extends IK_object {
 			form.submit();
 		</script>
     
-    	<?php
+    		<?php
 		}
-    }
+		$html = ob_get_clean();
+		if($echo)
+			echo $html;
+		return $html;
+
+	}
 }
 
-?>

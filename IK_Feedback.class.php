@@ -1,9 +1,7 @@
 <?php
+require_once('IK_Object.class.php');
 
-require_once('config.php');
-require_once('object.php');
-
-class IK_feedback extends IK_object {
+class IK_Feedback extends IK_Object {
 	
 	protected $_order_id;
 	protected $_amount;
@@ -22,7 +20,7 @@ class IK_feedback extends IK_object {
 	protected $_customer_country;
 	protected $_ip_address;
 	
-	protected $_secret = InternetkassaConfig::secret_out;
+	protected $_secret = INTERNETKASSA_SECRET;
 	
 	public function bind($array) {
 		$vars = $this->vars();

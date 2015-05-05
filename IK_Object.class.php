@@ -1,6 +1,13 @@
 <?php
+if(!defined("INTERNETKASSA_PSPID"))
+	throw new Exception("`INTERNETKASSA_PSPID` is not set!");
+if(!defined("INTERNETKASSA_ENVIROMENT"))
+	throw new Exception("`INTERNETKASSA_ENVIROMENT` is not set!");
+if(!defined("INTERNETKASSA_SECRET"))
+	throw new Exception("`INTERNETKASSA_SECRET` is not set!");
 
-class IK_object {
+
+class IK_Object {
 	
 	public $strict = true;
 

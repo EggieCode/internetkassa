@@ -1,25 +1,24 @@
 <?php
 
-require_once('config.php');
-require_once('object.php');
+require_once('IK_Object.class.php');
 
-class InternetKassa extends IK_object {
+class InternetKassa extends IK_Object {
 
     #const omgevingen = array('test', 'prod');
     
-    protected $_internetkassa_url = 'https://i-kassa.rabobank.nl/rik/%s/orderstandard.asp';
+    protected $_internetkassa_url = 'https://internetkassa.abnambro.nl/ncol/%s/orderstandard.asp';
     protected $_accept_url;
     protected $_decline_url;
     protected $_exception_url;
     protected $_cancel_url;
     protected $_template_url;
-    protected $_logo_url = 'https://www.tim-online.nl/images/logos/tim_online_logo.png';
+    protected $_logo_url = 'http://www.dexonlineservices.nl/images/logo.gif';
     protected $_home_url;
     protected $_catalog_url;
     
     protected $_payment_method;
     protected $_creditcard_brand;
-    protected $_secret = InternetkassaConfig::secret;
+    protected $_secret = INTERNETKASSA_SECRET;
     
     protected $_pspid;
     protected $_order_id;
@@ -50,8 +49,8 @@ class InternetKassa extends IK_object {
     }
     
     public function form() {
-    	require_once('form.php');
-    	$form = new IK_form($this);
+        require_once('form.php');
+    	$form = new IK_Form($this);
     	$form->PSPID = $this->pspid;
     	
     	$form->orderID = $this->order_id;
@@ -86,7 +85,6 @@ class InternetKassa extends IK_object {
     	
     	$form->operation = $this->operation;
     	
-    	//$form->
     	return $form;
     }
     

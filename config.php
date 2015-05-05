@@ -1,9 +1,5 @@
 <?php
 
-class InternetkassaConfig {
-    const pspid = 'testerdetest';
-    const environment = 'test';
-    const secret = '^Tim_online-teststring_voor:Silverpower!$';
-}
-
-?>
+define("INTERNETKASSA_PSPID","test");
+define("INTERNETKASSA_ENVIROMENT","test");
+define("INTERNETKASSA_SECRET","test");
