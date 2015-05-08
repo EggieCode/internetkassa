@@ -4,9 +4,9 @@ require_once('IK_Object.class.php');
 
 class InternetKassa extends IK_Object {
 
-    #const omgevingen = array('test', 'prod');
+   #const omgevingen = array('test', 'prod');
     
-    protected $_internetkassa_url = 'https://internetkassa.abnambro.nl/ncol/%s/orderstandard.asp';
+    protected $_internetkassa_url = 'https://internetkassa.abnamro.nl/Ncol/%s/orderstandard.asp';
     protected $_accept_url;
     protected $_decline_url;
     protected $_exception_url;
@@ -38,7 +38,7 @@ class InternetKassa extends IK_Object {
     protected $_operation = 'SAL'; //RES of SAL
     
     public $strict = true;
-    protected $_omgeving = 'test';
+    protected $_omgeving =INTERNETKASSA_ENVIROMENT ;
 
     public function  __construct($pspid) {
     	return $this->pspid = $pspid;
@@ -49,7 +49,7 @@ class InternetKassa extends IK_Object {
     }
     
     public function form() {
-        require_once('form.php');
+        require_once('IK_Form.class.php');
     	$form = new IK_Form($this);
     	$form->PSPID = $this->pspid;
     	
@@ -68,7 +68,6 @@ class InternetKassa extends IK_Object {
     	$form->ownertown = $this->customer_town;
     	$form->ownertelno = $this->customer_telephonenumber;
     	
-    	$form->SHASign = $this->signature;
     	$form->LOGO = $this->logo_url;
     	$form->TP = $this->template_url;
     	$form->PM = $this->payment_method;
